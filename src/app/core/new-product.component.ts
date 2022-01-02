@@ -13,7 +13,7 @@ import { MODES, SharedState, SHARED_STATE } from "./sharedstate.model";
 export class NewProductComponent {
   product: Product = new Product();
   constructor(private model: Model, @Inject(SHARED_STATE) public stateEvents: Observable<SharedState>) {
-    stateEvents.pipe(filter(state => state.id != 3)).
+    stateEvents.
       subscribe(update => {
         this.product = new Product();
         if (update.id != undefined) {

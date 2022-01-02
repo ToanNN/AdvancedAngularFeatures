@@ -1,9 +1,12 @@
+import { InjectionToken } from "@angular/core";
+
 export enum MODES {
   CREATE,
   EDIT
 }
 
+export const SHARED_STATE = new InjectionToken("SHARED_STATE");
 export class SharedState {
-  mode: MODES = MODES.CREATE;
-  id: number = 0;
+  constructor(public mode: MODES, public id?: number) { }
+
 }

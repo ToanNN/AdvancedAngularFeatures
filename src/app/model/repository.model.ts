@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Product } from "./product.model";
+import { RestDataSource } from "./rest.datasource";
 import { StaticDataSource } from "./static.datasource";
 @Injectable()
 export class Model {
   private products: Product[];
   private locator = (p: Product, id: number) => p.id == id;
-  constructor(private dataSource: StaticDataSource) {
-    this.products = new Array<Product>();
-    this.dataSource.getData().forEach(p => this.products.push(p));
+  constructor(private dataSource: RestDataSource) {
+    this.products = [];
+    dataSource.getData().subscribe(products => this.products = products);
   }
   getProducts(): Product[] {
     return this.products;

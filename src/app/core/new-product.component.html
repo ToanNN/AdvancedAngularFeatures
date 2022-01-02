@@ -1,5 +1,6 @@
 <div class="bg-primary text-white" [class.bg-warning]="editing">
   <h5>{{ editing ? "Edit an existing product" : "Create a new product" }}</h5>
+  Last Event: {{ stateEvents | async | formatState }}
 </div>
 <form
   novalidate
@@ -12,7 +13,7 @@
     <input
       type="text"
       class="form-control"
-      ([ngModel])="(product.name)"
+      [(ngModel)]="product.name"
       name="name"
       required
     />
@@ -22,7 +23,7 @@
     <input
       type="text"
       class="form-control"
-      ([ngModel])="(product.category)"
+      [(ngModel)]="product.category"
       name="cateogry"
       required
     />
@@ -32,7 +33,7 @@
     <input
       type="number"
       class="form-control"
-      ([ngModel])="(product.price)"
+      [(ngModel)]="product.price"
       name="price"
       required
       pattern="^[0-9]+(\.[0-9]{1,3})?$"

@@ -1,25 +1,17 @@
+import { Observable, Subject } from "rxjs";
 import { Message } from "./message.model";
 
 export class MessageService {
-  private handlers: ((m: Message) => void)[];
+  private subject = new Subject<Message>();
   constructor() {
-    this.handlers = [];
+
   }
 
   reportMessage(m: Message) {
-    if (this.handlers != null) {
-      for (const h of this.handlers) {
-        h(m);
-      }
-    }
+    this.subject.next(m);
   }
 
-  registerMessageHandler(handler: (m: Message) => void) {
-    if (!this.handlers) {
-      this.handlers = [];
-    }
-    if (!this.handlers.find(x => x == handler)) {
-      this.handlers.push(handler);
-    }
+  get messages(): Observable<Message> {
+    return this.subject;
   }
 }
