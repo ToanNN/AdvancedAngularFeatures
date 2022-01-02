@@ -1,5 +1,6 @@
 import { Component, Inject } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { filter, Observable } from "rxjs";
 import { Product } from "../model/product.model";
 import { Model } from "../model/repository.model";
@@ -12,15 +13,15 @@ import { MODES, SharedState, SHARED_STATE } from "./sharedstate.model";
 })
 export class NewProductComponent {
   product: Product = new Product();
-  constructor(private model: Model, @Inject(SHARED_STATE) public stateEvents: Observable<SharedState>) {
-    stateEvents.
-      subscribe(update => {
-        this.product = new Product();
-        if (update.id != undefined) {
-          Object.assign(this.product, this.model.getProduct(update.id));
-        }
-        this.editing = update.mode == MODES.EDIT;
-      })
+  constructor(public model: Model, activatedRoute: ActivatedRoute, private router: Router) {
+
+    activatedRoute.params.subscribe(params => {
+      this.editing = params["mode"] == "edit";
+      let id = params["id"];
+      if (id != null) {
+        Object.assign(this.product, model.getProduct(id) || new Product())
+      }
+    })
   }
 
   editing: boolean = false;
@@ -28,8 +29,7 @@ export class NewProductComponent {
   submitForm(form: NgForm) {
     if (form.valid) {
       this.model.saveProduct(this.product);
-      this.product = new Product();
-      form.reset();
+      this.router.navigateByUrl("/");
     }
   }
   resetForm() {

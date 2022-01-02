@@ -1,6 +1,19 @@
 <div class="bg-primary text-white" [class.bg-warning]="editing">
   <h5>{{ editing ? "Edit an existing product" : "Create a new product" }}</h5>
-  Last Event: {{ stateEvents | async | formatState }}
+</div>
+<div *ngIf="editing" class="p-2">
+  <button
+    class="btn btn-secondary m-1"
+    [routerLink]="['/product', 'edit', model.getPreviousProductId(product.id)]"
+  >
+    Previous
+  </button>
+  <button
+    class="btn btn-secondary m-1"
+    [routerLink]="['/product', 'edit', model.getNextProductId(product.id)]"
+  >
+    Next
+  </button>
 </div>
 <form
   novalidate
@@ -47,5 +60,7 @@
   >
     Save
   </button>
-  <button class="btn btn-secondary m-1" type="reset">Cancel</button>
+  <button class="btn btn-secondary m-1" type="reset" routerLink="/">
+    Cancel
+  </button>
 </form>

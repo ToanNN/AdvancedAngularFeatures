@@ -1,30 +1,63 @@
-<button class="btn btn-primary m-1" (click)="createProduct()">
-  Create New Product
-</button>
-<table class="table table-sm table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Price</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let p of getProducts()">
-      <td>{{ p.id }}</td>
-      <td>{{ p.name }}</td>
-      <td>{{ p.category }}</td>
-      <td>{{ p.price | currency: "USD" }}</td>
-      <td class="text-center">
-        <button class="btn btn-danger" (click)="deleteProduct(p.id)">
-          Delete
-        </button>
-        <button class="btn btn-warning" (click)="editProduct(p.id)">
-          Edit
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-auto">
+      <button
+        class="btn btn-secondary btn-block"
+        routerLink="/"
+        routerLinkActive="bg-primary"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        All
+      </button>
+      <button
+        *ngFor="let cat of categories"
+        class="btn btn-secondary btn-block m-2"
+        [routerLink]="['/table', cat]"
+        routerLinkActive="bg-primary"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ cat }}
+      </button>
+    </div>
+    <div class="col">
+      <button class="btn btn-primary m-1" routerLink="/product/create">
+        Create New Product
+      </button>
+      <table class="table table-sm table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of getProducts()">
+            <td>{{ p.id }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.category }}</td>
+            <td>{{ p.price | currency: "USD" }}</td>
+            <td class="text-center">
+              <button class="btn btn-danger" (click)="deleteProduct(p.id)">
+                Delete
+              </button>
+              <button
+                class="btn btn-warning"
+                [routerLink]="[
+                  '/product',
+                  'edit',
+                  p.id,
+                  { name: p.name, category: p.category, price: p.price }
+                ]"
+              >
+                Edit
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
