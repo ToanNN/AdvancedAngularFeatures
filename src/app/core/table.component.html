@@ -1,0 +1,30 @@
+<button class="btn btn-primary m-1" (click)="createProduct()">
+  Create New Product
+</button>
+<table class="table table-sm table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of getProducts()">
+      <td>{{ p.id }}</td>
+      <td>{{ p.name }}</td>
+      <td>{{ p.category }}</td>
+      <td>{{ p.price | currency: "USD" }}</td>
+      <td class="text-center">
+        <button class="btn btn-danger" (click)="deleteProduct(p.id)">
+          Delete
+        </button>
+        <button class="btn btn-warning" (click)="editProduct(p.id)">
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
