@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from "rxjs/operators";
 import { Product } from './product.model';
 
 export const REST_URL = new InjectionToken('rest-url');
@@ -35,7 +36,9 @@ export class RestDataSource {
         "Access-Key": "<secret>",
         "Application-Name": "Advanced Angular App"
       })
-    });
+    })
+      .pipe(catchError((error: Response) =>
+        throwError(() => new Error(`Network Error: ${error.statusText} (${error.status})`))));
   }
 
 }
