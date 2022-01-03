@@ -13,6 +13,7 @@ import { MODES, SharedState, SHARED_STATE } from "./sharedstate.model";
 })
 export class NewProductComponent {
   product: Product = new Product();
+  originalProduct = new Product();
   constructor(public model: Model, activatedRoute: ActivatedRoute, private router: Router) {
 
     activatedRoute.params.subscribe(params => {
@@ -20,20 +21,26 @@ export class NewProductComponent {
       let id = params["id"];
       if (id != null) {
         Object.assign(this.product, model.getProduct(id) || new Product())
+        Object.assign(this.originalProduct, this.product);
       }
     })
   }
 
   editing: boolean = false;
 
+  get productChanged(): boolean {
+    let currentProductJson = JSON.stringify(this.product);
+    let originalProductJson = JSON.stringify(this.originalProduct);
+
+    return currentProductJson !== originalProductJson;
+  }
+
   submitForm(form: NgForm) {
     if (form.valid) {
       this.model.saveProduct(this.product);
+      this.originalProduct = this.product;
       this.router.navigateByUrl("/");
     }
   }
-  resetForm() {
-    this.product = new Product();
 
-  }
 }

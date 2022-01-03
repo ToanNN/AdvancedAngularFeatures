@@ -15,12 +15,7 @@
     Next
   </button>
 </div>
-<form
-  novalidate
-  #productForm="ngForm"
-  (ngSubmit)="submitForm(productForm)"
-  (reset)="resetForm()"
->
+<form novalidate #productForm="ngForm" (ngSubmit)="submitForm(productForm)">
   <div class="form-group">
     <label for="name">Name</label>
     <input

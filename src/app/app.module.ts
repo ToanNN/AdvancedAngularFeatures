@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { MessageModule } from './messages/message.module';
 import { ModelModule } from './model/model.module';
+import { TermsGuard } from './term.guard';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { ModelModule } from './model/model.module';
     CoreModule,
     MessageModule
   ],
-  providers: [],
+  providers: [TermsGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,4 +3,8 @@ export class Product {
     public name?: string,
     public category?: string,
     public price?: number) { }
+
+
 }
+
+

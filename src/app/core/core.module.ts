@@ -11,11 +11,12 @@ import { ProductCountComponent } from "./productCount.component";
 import { SharedState, SHARED_STATE } from "./sharedstate.model";
 import { FormatStatePipe } from "./state.pipe";
 import { TableComponent } from "./table.component";
+import { UnsavedGuard } from "./unsaved.guard";
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ModelModule, RouterModule],
   declarations: [TableComponent, NewProductComponent, FormatStatePipe, ProductCountComponent, CategoryCountComponent, NotFoundComponent],
   exports: [TableComponent, NewProductComponent],
-  providers: [{ provide: SHARED_STATE, useValue: new Subject<SharedState>() }]
+  providers: [{ provide: SHARED_STATE, useValue: new Subject<SharedState>() }, UnsavedGuard]
 })
 export class CoreModule { }
