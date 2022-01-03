@@ -1,4 +1,6 @@
+import { DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
 import { Product } from "../model/product.model";
 import { Model } from "../model/repository.model";
 import { FirstComponent } from "./first.component";
@@ -22,6 +24,10 @@ describe("First Component", () => {
     });
     fixture = TestBed.createComponent(FirstComponent);
     component = fixture.componentInstance;
+
+    //query binding element
+    debugElement = fixture.debugElement;
+    bindingElement = debugElement.query(By.css("span")).nativeElement;
   });
 
   it("first component is defined", () => expect(component).toBeDefined());
@@ -34,5 +40,19 @@ describe("First Component", () => {
     component.category = "Bike";
     expect(component.getProducts().length).toBe(0);
   })
+
+  //test binding
+  let debugElement: DebugElement;
+  let bindingElement: HTMLSpanElement;
+
+  it("Span element shows the number of products", () => {
+    component.category = "Chess"
+    fixture.detectChanges();
+    expect(bindingElement.textContent).toContain("1");
+    component.category = "Soccer";
+    fixture.detectChanges();
+    expect(bindingElement.textContent).toContain("2");
+  })
+
 
 });
